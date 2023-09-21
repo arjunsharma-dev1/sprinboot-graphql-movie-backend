@@ -10,21 +10,23 @@ type MovieMeta {
     movie: Movie!,
     genre: [String],
     title: String!,
-    duration: Duration,
+#    duration: Duration,
     releasedOn: Date
 }
 
-type Date {
-    day: Int!,
-    month: Month!,
-    year: Int!
-}
+scalar Date
+#scalar Duration
+#type Date {
+#    day: Int!,
+#    month: Month!,
+#    year: Int!
+#}
 
-type Duration {
-    hour: Int!
-    minutes: Int!
-    seconds: Int!
-}
+#type Duration {
+#    hour: Int!
+#    minutes: Int!
+#    seconds: Int!
+#}
 
 type Rating {
     rate: Float,

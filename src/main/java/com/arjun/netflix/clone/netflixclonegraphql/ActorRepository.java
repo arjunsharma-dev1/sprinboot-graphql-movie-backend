@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface ActorRepository extends JpaRepository<Actor, String> {
-    List<Actor> getByMovie(Movie movie);
+    List<Actor> getByMovies(Movie movie);
 }

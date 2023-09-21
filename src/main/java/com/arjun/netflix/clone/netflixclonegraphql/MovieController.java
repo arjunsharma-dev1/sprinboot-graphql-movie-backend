@@ -10,7 +10,6 @@ import java.util.List;
 
 @Controller
 public class MovieController {
-
     @Autowired
     private MovieRepository movieRepository;
     @Autowired
@@ -30,6 +29,6 @@ public class MovieController {
 
     @SchemaMapping
     public List<Actor> getActorOfMovie(Movie movie) {
-        return actorRepository.getByMovie(movie);
+        return actorRepository.getByMovies(movie);
     }
 }
