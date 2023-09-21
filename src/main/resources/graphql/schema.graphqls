@@ -1,0 +1,48 @@
+type Movie {
+    id: ID,
+    meta: MovieMeta!,
+    actors: [Actor!],
+    next: [Movie!],
+    rating: Rating,
+}
+
+type MovieMeta {
+    movie: Movie!,
+    genre: [String],
+    title: String!,
+    duration: Duration,
+    releasedOn: Date
+}
+
+type Date {
+    day: Int!,
+    month: Month!,
+    year: Int!
+}
+
+type Duration {
+    hour: Int!
+    minutes: Int!
+    seconds: Int!
+}
+
+type Rating {
+    rate: Float,
+    scale: Float
+}
+
+type Actor {
+    id: ID,
+    name: String!,
+    dob: Int,
+    movies: [Movie!]!
+}
+
+enum Month {
+    January, Feburary, March, April, May, June, July, August, September, October, November, December
+}
+
+type Query {
+    movieById(id: ID): Movie,
+    actorOfMovie(movieId: ID): [Actor!]!
+}
