@@ -5,6 +5,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -22,13 +23,20 @@ public class MovieController {
         return movieRepository.getReferenceById(id);
     }
 
+//    @QueryMapping
+//    public Actor getActorById(@Argument String actorId) {
+//        return actorRepository.getReferenceById(actorId);
+//    }
     @SchemaMapping
-    public MovieMeta movieMeta(Movie movie) {
-        return movieMetaRepository.getReferenceById(movie);
+    public MovieMeta movieMeta(String movieId) {
+        return movieMetaRepository.getReferenceByMovieId(movieId);
     }
 
     @SchemaMapping
-    public List<Actor> getActorOfMovie(Movie movie) {
+    public List<Actor> actors(Movie movie, @Argument String id) {
+        if (id != null && !id.isBlank()) {
+            return List.of(actorRepository.getByMoviesAndId(movie, id));
+        }
         return actorRepository.getByMovies(movie);
     }
 }

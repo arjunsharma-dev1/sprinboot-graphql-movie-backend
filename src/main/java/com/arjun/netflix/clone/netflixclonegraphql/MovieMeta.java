@@ -25,5 +25,5 @@ public class MovieMeta {
     private List<String> genre;
     private String title;
     private Duration duration;
-    private LocalDate releaseOn;
+    private LocalDate releasedOn;
 }
