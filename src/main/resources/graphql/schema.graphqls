@@ -10,7 +10,7 @@ type Movie {
 
 type MovieMeta {
     movie: Movie!,
-    genre: [String],
+    genre: [String!]!,
     title: String!,
     releasedOn: Date
 }
@@ -32,4 +32,10 @@ type Actor {
 type Query {
     movieById(id: ID): Movie,
     actorOfMovie(movieId: ID): [Actor!]!
+    getActors: [Actor!]!
+    getMovies: [Movie!]!
+}
+
+type Mutation {
+    createMovie(genre: [String!]!, title: String!, releasedOn: Date, actors: [ID]!): ID
 }
