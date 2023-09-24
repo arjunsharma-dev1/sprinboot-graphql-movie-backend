@@ -1,0 +1,76 @@
+query movieById {
+  movieById(id: "548378be-311a-48d1-adcd-94680fc8677b") {
+    id
+    rating {
+      rate
+      scale
+    }
+    meta {
+      title
+      genre
+      releasedOn
+    }
+    actors(id: "639c31da-f323-42f7-acde-6b34dc0c254a") {
+      id
+      name
+      dob
+    }
+  }
+}
+
+query getActors {
+  getActors {
+    name
+    dob
+    movies {
+      meta {
+        title
+      }
+    }
+  }
+}
+
+query getMovies {
+  getMovies {
+    id
+    meta {
+      title
+      genre
+      releasedOn
+    }
+    actors {
+      name
+    }
+    rating {
+      rate
+      scale
+    }
+  }
+}
+
+mutation createMovie {
+  createMovie(
+    genre: ["Action"],
+    title: "Roman Regins",
+    releasedOn: "2021-08-15",
+    actors: [])
+}
+
+mutation createActor {
+  createActor(
+    name: "Arjun",
+    dob: "2020-08-15",
+    movies: [
+    	"a51559be-d1e5-4639-9847-4d8c9a26b878"
+    ])
+}
+
+mutation addRating {
+  addRating(
+    movieId: "a51559be-d1e5-4639-9847-4d8c9a26b878",
+    scale: 5,
+    rate: 4.3) {
+    rate
+    scale
+  }
+}

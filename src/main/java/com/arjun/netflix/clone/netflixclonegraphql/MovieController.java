@@ -84,6 +84,9 @@ public class MovieController {
         if (!CollectionUtils.isEmpty(movies)) {
 //            TODO: report if movie(s) given not present
             var moviesFetched = movieRepository.findAllById(movies);
+            if (moviesFetched.size() < movies.size()) {
+                return null;
+            }
             actor.addMovies(moviesFetched);
 //            movieRepository.saveAll(moviesFetched);
         }
