@@ -29,4 +29,15 @@ public class Movie {
     private List<Movie> next = new ArrayList<>();
     @Embedded
     private Rating rating;
+
+    public void addActors(List<Actor> actors) {
+        actors.forEach(this::addActor);
+    }
+
+    public void addActor(Actor actor) {
+        if(this.actors == null) {
+            this.actors = new ArrayList<>();
+        }
+        this.actors.add(actor);
+    }
 }

@@ -74,6 +74,40 @@ public class MovieController {
         return movie.getId();
     }
 
+    @MutationMapping
+    public String createActor(@Argument String name,
+                              @Argument LocalDate dob,
+                              @Argument List<String> movies) {
+        var actor = new Actor()
+                .setDob(dob)
+                .setName(name);
+        if (!CollectionUtils.isEmpty(movies)) {
+//            TODO: report if movie(s) given not present
+            var moviesFetched = movieRepository.findAllById(movies);
+            actor.addMovies(moviesFetched);
+//            movieRepository.saveAll(moviesFetched);
+        }
+        actorRepository.save(actor);
+        return actor.getId();
+    }
+
+    @MutationMapping
+    public Rating addRating(@Argument String movieId,
+                              @Argument short scale,
+                              @Argument float rate) {
+        var movieOptional = movieRepository.findById(movieId);
+        if (movieOptional.isEmpty()) {
+            return null;
+        }
+        var movie = movieOptional.get();
+        if (rate > scale) {
+            return null;
+        }
+        movie.getRating().setRate(rate).setScale(scale);
+        movieRepository.save(movie);
+        return movie.getRating();
+    }
+
     @SchemaMapping
     public List<Actor> actors(Movie movie, @Argument String id) {
         if (id != null && !id.isBlank()) {

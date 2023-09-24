@@ -19,6 +19,18 @@ public class Actor {
     private String id;
     private String name;
     private LocalDate dob;
-    @ManyToMany(mappedBy = "actors")
+    @ManyToMany(mappedBy = "actors", cascade = CascadeType.ALL)
     private List<Movie> movies = new ArrayList<>();
+
+    public void addMovies(List<Movie> movies) {
+        movies.forEach(this::addMovie);
+    }
+
+    public void addMovie(Movie movie) {
+        movie.addActor(this);
+        if (this.movies == null) {
+            this.movies = new ArrayList<>();
+        }
+        this.movies.add(movie);
+    }
 }
