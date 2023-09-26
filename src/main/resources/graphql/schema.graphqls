@@ -40,4 +40,5 @@ type Mutation {
     createMovie(genre: [String!]!, title: String!, releasedOn: Date, actors: [ID]!): ID
     createActor(name: String!, dob: Date, movies: [String!]): ID
     addRating(movieId: String!, scale: Int, rate: Float!): Rating
+    addActorToMovie(movieId: String!, actorId: String!): Boolean
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +35,15 @@ public class Movie {
         actors.forEach(this::addActor);
     }
 
-    public void addActor(Actor actor) {
+    public boolean addActor(Actor actor) {
         if(this.actors == null) {
             this.actors = new ArrayList<>();
         }
-        this.actors.add(actor);
+        for(Actor actorInLoop: this.actors) {
+            if (StringUtils.equals(actorInLoop.getId(), actor.getId())) {
+                return false;
+            }
+        }
+        return this.actors.add(actor);
     }
 }

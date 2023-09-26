@@ -1,5 +1,6 @@
 package com.arjun.netflix.clone.netflixclonegraphql;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -7,6 +8,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -72,6 +74,24 @@ public class MovieController {
         movieMeta.setMovie(movie);
         movieRepository.save(movie);
         return movie.getId();
+    }
+    @MutationMapping
+    public boolean addActorToMovie(
+            @NonNull @Argument String movieId,
+            @NonNull @Argument String actorId) {
+        var actorOptional = actorRepository.findById(actorId);
+        var movieOptional = movieRepository.findById(movieId);
+
+        if (actorOptional.isEmpty() || movieOptional.isEmpty()) {
+            return false;
+        }
+        var movie = movieOptional.get();
+        boolean isAdded = movie.addActor(actorOptional.get());
+        if(isAdded) {
+            movieRepository.save(movie);
+        }
+        return isAdded;
+
     }
 
     @MutationMapping
